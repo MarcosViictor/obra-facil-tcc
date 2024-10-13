@@ -8,7 +8,7 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('usuarios/', include('usuarios.urls')),
-    path('login/', auth_views.LoginView.as_view(), name='login'),  # Adicione isso
+    path('login/', auth_views.LoginView.as_view(), name='login'),
 ]
 
 
