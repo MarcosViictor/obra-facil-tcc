@@ -52,7 +52,7 @@ from django.db import models
 class Material(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
-    quantidade = models.DecimalField(max_digits=10, decimal_places=2, help_text="Quantidade do material")
+    quantidade = models.IntegerField()
     preco_unitario = models.DecimalField(max_digits=10, decimal_places=2, help_text="Preço unitário do material")
     data_compra = models.DateField()
     obra = models.ForeignKey(Obra, on_delete=models.CASCADE, related_name='materiais')

@@ -1,16 +1,17 @@
+<!-- profissional/profissional_confirm_delete.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deletar Profissional</title>
 </head>
 <body>
-    <h1>Tem certeza que deseja deletar {{ profissional.nome }}?</h1>
+    <h1>Deletar Profissional</h1>
+    <p>Tem certeza que deseja deletar o profissional "{{ object.nome }}"?</p>
 
-    <form method="POST">
+    <form method="post">
         {% csrf_token %}
-        <button type="submit">Confirmar</button>
+        <button type="submit">Sim, Deletar</button>
     </form>
 
     <a href="{% url 'profissional-list' %}">Cancelar</a>

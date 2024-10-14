@@ -1,21 +1,25 @@
+<!-- profissional/profissional_list.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Profissionais</title>
 </head>
 <body>
     <h1>Lista de Profissionais</h1>
+    <a href="{% url 'profissional-create' %}">Adicionar Novo Profissional</a>
     <ul>
         {% for profissional in profissionais %}
             <li>
-                <a href="{% url 'profissional-detail' profissional.pk %}">
+                <a href="{% url 'profissional-detail' profissional.id %}">
                     {{ profissional.nome }} - {{ profissional.funcao }}
                 </a>
+                <a href="{% url 'profissional-update' profissional.id %}">Editar</a>
+                <a href="{% url 'profissional-delete' profissional.id %}">Deletar</a>
             </li>
+        {% empty %}
+            <li>Nenhum profissional cadastrado.</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'profissional-create' %}">Adicionar Novo Profissional</a>
 </body>
 </html>

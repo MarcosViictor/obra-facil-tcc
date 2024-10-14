@@ -1,15 +1,31 @@
-<h1>{{ object.nome }}</h1>
-<p>{{ object.descricao }}</p>
-<p>Endereço: {{ object.endereco }}</p>
-<p>Data de Início: {{ object.data_inicio }}</p>
-<p>Previsão de Fim: {{ object.dt_prev_fim }}</p>
-<p>Gerente: {{ object.gerente }}</p>
-<p>Mestres:</p>
-<ul>
-    {% for mestre in object.mestres.all %}
-        <li>{{ mestre }}</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'obra-update' object.pk %}">Editar</a> |
-<a href="{% url 'obra-delete' object.pk %}">Excluir</a> |
-<a href="{% url 'obra-list' %}">Voltar</a>
+{% extends 'obra/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4">{{ object.nome }}</h1>
+        </div>
+        <div class="card-body">
+            <p class="fw-bold">{{ object.descricao }}</p>
+            <p><strong>Endereço:</strong> {{ object.endereco }}</p>
+            <p><strong>Data de Início:</strong> {{ object.data_inicio }}</p>
+            <p><strong>Previsão de Fim:</strong> {{ object.dt_prev_fim }}</p>
+            <p><strong>Gerente:</strong> {{ object.gerente }}</p>
+
+            <h5 class="mt-4">Mestres:</h5>
+            <ul class="list-group mb-4">
+                {% for mestre in object.mestres.all %}
+                <li class="list-group-item">{{ mestre }}</li>
+                {% endfor %}
+            </ul>
+
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'obra-update' object.pk %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'obra-delete' object.pk %}" class="btn btn-danger">Excluir</a>
+                <a href="{% url 'obra-list' %}" class="btn btn-secondary">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

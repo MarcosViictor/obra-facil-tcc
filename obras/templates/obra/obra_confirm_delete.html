@@ -1,6 +1,17 @@
-<h1>Tem certeza que deseja excluir "{{ object.nome }}"?</h1>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Sim, excluir</button>
-</form>
-<a href="{% url 'obra-list' %}">Cancelar</a>
+{% extends 'obra/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Tem certeza que deseja excluir esta obra?</h5>
+            <p class="fw-bold">{{ object.nome }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <a href="{% url 'obra-list' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

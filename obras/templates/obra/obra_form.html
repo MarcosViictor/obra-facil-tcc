@@ -1,54 +1,51 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Obra</title>
-</head>
-<body>
-    <h1>Cadastrar Nova Obra</h1>
+{% extends 'obra/base.html' %}
 
-    <form method="POST">
+{% block content %}
+<div class="container my-5">
+    <h1 class="h3">{{ object.pk|yesno:"Editar Obra,Nova Obra" }}</h1>
+    <form method="post">
         {% csrf_token %}
-        {{ form.non_field_errors }}
-        <div>
-            {{ form.nome.label }}<br>
-            {{ form.nome }}<br>
-            {{ form.nome.errors }}
+        <div class="mb-3">
+            <label for="id_nome" class="form-label">Nome</label>
+            <input type="text" name="nome" id="id_nome" class="form-control" value="{{ object.nome }}" required>
         </div>
-        <div>
-            {{ form.descricao.label }}<br>
-            {{ form.descricao }}<br>
-            {{ form.descricao.errors }}
-        </div>
-        <div>
-            {{ form.endereco.label }}<br>
-            {{ form.endereco }}<br>
-            {{ form.endereco.errors }}
-        </div>
-        <div>
-            {{ form.data_inicio.label }}<br>
-            <input type="date" name="data_inicio" required><br> <!-- Campo de data -->
-            {{ form.data_inicio.errors }}
-        </div>
-        <div>
-            {{ form.dt_prev_fim.label }}<br>
-            <input type="date" name="dt_prev_fim" required><br> <!-- Campo de data -->
-            {{ form.dt_prev_fim.errors }}
-        </div>
-        <div>
-            {{ form.gerente.label }}<br>
-            {{ form.gerente }}<br>
-            {{ form.gerente.errors }}
-        </div>
-        <div>
-            {{ form.mestres.label }}<br>
-            {{ form.mestres }}<br>
-            {{ form.mestres.errors }}
-        </div>
-        <button type="submit">Salvar</button>
-    </form>
 
-    <a href="{% url 'obra-list' %}">Voltar para a lista de obras</a>
-</body>
-</html>
+        <div class="mb-3">
+            <label for="id_descricao" class="form-label">Descrição</label>
+            <textarea name="descricao" id="id_descricao" class="form-control" required>{{ object.descricao }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_endereco" class="form-label">Endereço</label>
+            <input type="text" name="endereco" id="id_endereco" class="form-control" value="{{ object.endereco }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_data_inicio" class="form-label">Data de Início</label>
+            <input type="date" name="data_inicio" id="id_data_inicio" class="form-control" value="{{ object.data_inicio }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_dt_prev_fim" class="form-label">Previsão de Fim</label>
+            <input type="date" name="dt_prev_fim" id="id_dt_prev_fim" class="form-control" value="{{ object.dt_prev_fim }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_gerente" class="form-label">Gerente</label>
+            <input type="text" name="gerente" id="id_gerente" class="form-control" value="{{ object.gerente }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_mestres" class="form-label">Mestres</label>
+            <select multiple name="mestres" id="id_mestres" class="form-control">
+                {% for mestre in mestres %}
+                    <option value="{{ mestre.id }}" {% if mestre in object.mestres.all %}selected{% endif %}>{{ mestre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{% url 'obra-list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

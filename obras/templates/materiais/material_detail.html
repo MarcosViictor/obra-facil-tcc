@@ -1,22 +1,21 @@
-<!-- templates/materiais/material_detail.html -->
+<!-- materiais/material_detail.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Material</title>
 </head>
 <body>
-    <h1>{{ material.nome }}</h1>
+    <h1>Detalhes de {{ material.nome }}</h1>
     <p>Descrição: {{ material.descricao }}</p>
     <p>Quantidade: {{ material.quantidade }}</p>
-    <p>Preço Unitário: {{ material.preco_unitario }}</p>
-    <p>Custo Total: {{ material.custo_total }}</p>
+    <p>Preço Unitário: R$ {{ material.preco_unitario }}</p>
+    <p>Data de Compra: {{ material.data_compra }}</p>
+    <p>Obra: {{ material.obra }}</p>
     <p>Fornecedor: {{ material.fornecedor }}</p>
-    <p>Obra: {{ material.obra.nome }}</p>
 
-    <a href="{% url 'material-update' material.pk %}">Editar</a>
-    <a href="{% url 'material-delete' material.pk %}">Deletar</a>
-    <a href="{% url 'material-list' %}">Voltar à lista</a>
+    <a href="{% url 'material-update' material.id %}">Editar</a>
+    <a href="{% url 'material-delete' material.id %}">Deletar</a>
+    <a href="{% url 'material-list' %}">Voltar para a lista</a>
 </body>
 </html>
