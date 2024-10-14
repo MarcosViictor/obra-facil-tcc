@@ -1,4 +1,3 @@
-# usuarios/urls.py
 from django.urls import path
 from .views.cadastro.cadastro_usuario import cadastrar_usuario  
 from .views.login.login_usuario import login_usuario
