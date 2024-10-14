@@ -1,51 +1,69 @@
-{% extends 'obra/base.html' %}
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="pt-br">
 
-{% block content %}
-<div class="container my-5">
-    <h1 class="h3">{{ object.pk|yesno:"Editar Obra,Nova Obra" }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="id_nome" class="form-label">Nome</label>
-            <input type="text" name="nome" id="id_nome" class="form-control" value="{{ object.nome }}" required>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% if object %}Editar{% else %}Criar{% endif %} Obra</title>
+
+        <!-- Custom fonts for this template-->
+        <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <!-- Custom styles for this template-->
+        <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    </head>
+
+    <body class="bg-gradient-primary">
+        <div class="container">
+            <!-- Outer Row -->
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-lg-12 col-md-9">
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-0">
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4">{% if object %}Editar{% else %}Criar{% endif %} Obra</h1>
+                                        </div>
+
+                                        <!-- Exibindo o nome do usuário logado -->
+                                        {% if user.is_authenticated %}
+                                            <p>Usuário logado: {{ user.username }}</p>
+                                        {% else %}
+                                            <p>Nenhum usuário logado.</p>
+                                        {% endif %}
+
+                                        <!-- Formulário de Criação/Edição -->
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            <button type="submit" class="btn btn-primary btn-user btn-block">Salvar</button>
+                                        </form>
+
+                                        <a href="{% url 'obra-list' %}" class="btn btn-secondary btn-user btn-block">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label for="id_descricao" class="form-label">Descrição</label>
-            <textarea name="descricao" id="id_descricao" class="form-control" required>{{ object.descricao }}</textarea>
-        </div>
+        <!-- Bootstrap core JavaScript-->
+        <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-        <div class="mb-3">
-            <label for="id_endereco" class="form-label">Endereço</label>
-            <input type="text" name="endereco" id="id_endereco" class="form-control" value="{{ object.endereco }}" required>
-        </div>
+        <!-- Core plugin JavaScript-->
+        <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-        <div class="mb-3">
-            <label for="id_data_inicio" class="form-label">Data de Início</label>
-            <input type="date" name="data_inicio" id="id_data_inicio" class="form-control" value="{{ object.data_inicio }}" required>
-        </div>
+        <!-- Custom scripts for all pages-->
+        <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    </body>
 
-        <div class="mb-3">
-            <label for="id_dt_prev_fim" class="form-label">Previsão de Fim</label>
-            <input type="date" name="dt_prev_fim" id="id_dt_prev_fim" class="form-control" value="{{ object.dt_prev_fim }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="id_gerente" class="form-label">Gerente</label>
-            <input type="text" name="gerente" id="id_gerente" class="form-control" value="{{ object.gerente }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="id_mestres" class="form-label">Mestres</label>
-            <select multiple name="mestres" id="id_mestres" class="form-control">
-                {% for mestre in mestres %}
-                    <option value="{{ mestre.id }}" {% if mestre in object.mestres.all %}selected{% endif %}>{{ mestre }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'obra-list' %}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
-{% endblock %}
+    </html>

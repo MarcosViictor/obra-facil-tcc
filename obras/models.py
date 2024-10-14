@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from usuarios.models import Perfil
 
 class Obra(models.Model):
@@ -26,6 +27,10 @@ class Obra(models.Model):
             total_progresso = sum(acomp.progresso for acomp in acompanhamentos)
             self.progresso_total = total_progresso / acompanhamentos.count()
             self.save()
+
+    def get_absolute_url(self):
+        return reverse('obra-detail', args=[self.pk])  # Altere para a URL que deseja redirecionar
+
 class Profissional(models.Model):
     nome = models.CharField(max_length=100)
     funcao = models.CharField(max_length=50) 
@@ -33,6 +38,9 @@ class Profissional(models.Model):
 
     def __str__(self):
         return f"{self.nome} - {self.funcao}"
+
+    def get_absolute_url(self):
+        return reverse('profissional-detail', args=[self.pk])  # Altere para a URL que deseja redirecionar
 
 class Acompanhamento(models.Model):
     obra = models.ForeignKey(Obra, on_delete=models.CASCADE, related_name='acompanhamentos')
@@ -47,7 +55,8 @@ class Acompanhamento(models.Model):
     def __str__(self):
         return f"Acompanhamento em {self.obra.nome} - {self.data} - {self.progresso}%"
 
-from django.db import models
+    def get_absolute_url(self):
+        return reverse('acompanhamento-detail', args=[self.pk])  # Altere para a URL que deseja redirecionar
 
 class Material(models.Model):
     nome = models.CharField(max_length=100)
@@ -64,3 +73,6 @@ class Material(models.Model):
     @property
     def custo_total(self):
         return self.quantidade * self.preco_unitario
+
+    def get_absolute_url(self):
+        return reverse('material-detail', args=[self.pk])  # Altere para a URL que deseja redirecionar

@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Lista de Acompanhamentos</title>
 </head>
 <body>
-    <h1>Lista de Acompanhamentos</h1>
-    <ul>
-        {% for acompanhamento in acompanhamentos %}
-            <li>
-                <a href="{% url 'acompanhamento-detail' acompanhamento.pk %}">
-                    Acompanhamento da obra: {{ acompanhamento.obra.nome }} - Data: {{ acompanhamento.data }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'acompanhamento-create' %}">Adicionar Acompanhamento</a>
+    <div class="container my-5">
+        <h1 class="h3">Lista de Acompanhamentos</h1>
+        <a href="{% url 'acompanhamento-create' %}" class="btn btn-primary mb-3">Adicionar Acompanhamento</a>
+        <ul class="list-group">
+            {% for acompanhamento in acompanhamentos %}
+                <li class="list-group-item">
+                    <a href="{% url 'acompanhamento-detail' acompanhamento.pk %}">
+                        Acompanhamento da obra: <strong>{{ acompanhamento.obra.nome }}</strong> - Data: {{ acompanhamento.data }}
+                    </a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">Nenhum acompanhamento cadastrado.</li>
+            {% endfor %}
+        </ul>
+        <br>
+         <a href="{% url 'home' %}" class="btn btn-secondary">Voltar</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

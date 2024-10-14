@@ -1,25 +1,37 @@
-<!-- materiais/material_list.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Lista de Materiais</title>
 </head>
 <body>
-    <h1>Lista de Materiais</h1>
-    <a href="{% url 'material-create' %}">Adicionar Novo Material</a>
-    <ul>
-        {% for material in materiais %}
-            <li>
-                <a href="{% url 'material-detail' material.id %}">
-                    {{ material.nome }} - {{ material.quantidade }} unidades
-                </a>
-                <a href="{% url 'material-update' material.id %}">Editar</a>
-                <a href="{% url 'material-delete' material.id %}">Deletar</a>
-            </li>
-        {% empty %}
-            <li>Nenhum material cadastrado.</li>
-        {% endfor %}
-    </ul>
+    <div class="container my-5">
+        <h1 class="h3">Lista de Materiais</h1>
+        <a href="{% url 'material-create' %}" class="btn btn-primary mb-3">Adicionar Novo Material</a>
+        <ul class="list-group">
+            {% for material in materiais %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'material-detail' material.id %}">
+                        {{ material.nome }} - {{ material.quantidade }} unidades
+                    </a>
+                    <div>
+                        <a href="{% url 'material-update' material.id %}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{% url 'material-delete' material.id %}" class="btn btn-danger btn-sm">Deletar</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="list-group-item">Nenhum material cadastrado.</li>
+            {% endfor %}
+        </ul>
+        <br>
+         <a href="{% url 'home' %}" class="btn btn-secondary">Voltar</a>
+    </div>
+    
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

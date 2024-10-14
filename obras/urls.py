@@ -1,3 +1,4 @@
+from django.contrib.auth import views as auth_views
 from django.urls import path
 #Obras
 from .views.obras import (ObraListView, ObraDetailView, ObraCreateView, 
@@ -21,7 +22,18 @@ from .views.materiais import(
     MaterialListView, MaterialDetailView, MaterialCreateView,
     MaterialUpdateView, MaterialDeleteView
 )
+
+#home
+from .views.home import home
+#logout
+from .views.logout import logout_view
+
 urlpatterns = [
+    #home
+    path('home/', home, name='home'),
+    #
+    #logout
+    path('logout/', logout_view, name='logout'),
     #Obras
     path('listar/obras/', ObraListView.as_view(), name='obra-list'),
     path('<int:pk>/', ObraDetailView.as_view(), name='obra-detail'),

@@ -13,8 +13,8 @@ def cadastrar_usuario(request):
             tipo_usuario = formulario.cleaned_data['tipo_usuarios'] 
             Perfil.objects.create(usuarios=usuario, tipo_usuarios=tipo_usuario)
 
-            login(request, usuario)  # Loga o usuário automaticamente após cadastro
-            return redirect(reverse('obra-list'))  # Redireciona para obra-list
+            login(request, usuario)  
+            return redirect(reverse('home')) 
     else:
         formulario = FormularioCadastroUsuario()
 

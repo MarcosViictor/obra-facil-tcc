@@ -1,18 +1,30 @@
-<!-- profissional/profissional_detail.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Detalhes do Profissional</title>
 </head>
 <body>
-    <h1>Detalhes de {{ profissionais.nome }}</h1>
-    <p>Nome: {{ profissionais.nome }}</p>
-    <p>Função: {{ profissionais.funcao }}</p>
-    <p>Obra: {{ profissionais.obra }}</p>
+    <div class="container my-5">
+        <h1 class="h3">Detalhes de {{ profissionais.nome }}</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p><strong>Nome:</strong> {{ profissionais.nome }}</p>
+                <p><strong>Função:</strong> {{ profissionais.funcao }}</p>
+                <p><strong>Obra:</strong> {{ profissionais.obra }}</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'profissional-update' profissionais.id %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'profissional-delete' profissionais.id %}" class="btn btn-danger">Deletar</a>
+                <a href="{% url 'profissional-list' %}" class="btn btn-secondary">Voltar para a lista</a>
+            </div>
+        </div>
+    </div>
 
-    <a href="{% url 'profissional-update' profissionais.id %}">Editar</a>
-    <a href="{% url 'profissional-delete' profissionais.id %}">Deletar</a>
-    <a href="{% url 'profissional-list' %}">Voltar para a lista</a>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

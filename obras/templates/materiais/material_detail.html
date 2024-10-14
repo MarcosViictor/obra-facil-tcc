@@ -1,21 +1,34 @@
-<!-- materiais/material_detail.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Detalhes do Material</title>
 </head>
 <body>
-    <h1>Detalhes de {{ material.nome }}</h1>
-    <p>Descrição: {{ material.descricao }}</p>
-    <p>Quantidade: {{ material.quantidade }}</p>
-    <p>Preço Unitário: R$ {{ material.preco_unitario }}</p>
-    <p>Data de Compra: {{ material.data_compra }}</p>
-    <p>Obra: {{ material.obra }}</p>
-    <p>Fornecedor: {{ material.fornecedor }}</p>
+    <div class="container my-5">
+        <h1 class="h3">Detalhes de {{ material.nome }}</h1>
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <p><strong>Descrição:</strong> {{ material.descricao }}</p>
+                <p><strong>Quantidade:</strong> {{ material.quantidade }}</p>
+                <p><strong>Preço Unitário:</strong> R$ {{ material.preco_unitario }}</p>
+                <p><strong>Data de Compra:</strong> {{ material.data_compra }}</p>
+                <p><strong>Obra:</strong> {{ material.obra }}</p>
+                <p><strong>Fornecedor:</strong> {{ material.fornecedor }}</p>
+            </div>
+        </div>
 
-    <a href="{% url 'material-update' material.id %}">Editar</a>
-    <a href="{% url 'material-delete' material.id %}">Deletar</a>
-    <a href="{% url 'material-list' %}">Voltar para a lista</a>
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'material-update' material.id %}" class="btn btn-warning">Editar</a>
+            <a href="{% url 'material-delete' material.id %}" class="btn btn-danger">Deletar</a>
+            <a href="{% url 'material-list' %}" class="btn btn-secondary">Voltar para a lista</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

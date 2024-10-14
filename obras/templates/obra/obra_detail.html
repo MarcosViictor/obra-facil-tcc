@@ -1,31 +1,61 @@
-{% extends 'obra/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
 
-{% block content %}
-<div class="container my-5">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h1 class="h4">{{ object.nome }}</h1>
-        </div>
-        <div class="card-body">
-            <p class="fw-bold">{{ object.descricao }}</p>
-            <p><strong>Endereço:</strong> {{ object.endereco }}</p>
-            <p><strong>Data de Início:</strong> {{ object.data_inicio }}</p>
-            <p><strong>Previsão de Fim:</strong> {{ object.dt_prev_fim }}</p>
-            <p><strong>Gerente:</strong> {{ object.gerente }}</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ object.nome }} - Detalhes</title>
 
-            <h5 class="mt-4">Mestres:</h5>
-            <ul class="list-group mb-4">
-                {% for mestre in object.mestres.all %}
-                <li class="list-group-item">{{ mestre }}</li>
-                {% endfor %}
-            </ul>
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-            <div class="d-flex justify-content-between">
-                <a href="{% url 'obra-update' object.pk %}" class="btn btn-warning">Editar</a>
-                <a href="{% url 'obra-delete' object.pk %}" class="btn btn-danger">Excluir</a>
-                <a href="{% url 'obra-list' %}" class="btn btn-secondary">Voltar</a>
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-light">
+
+    <div class="container my-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h4">{{ object.nome }}</h1>
+            </div>
+            <div class="card-body">
+                <p class="fw-bold">{{ object.descricao }}</p>
+                <p><strong>Endereço:</strong> {{ object.endereco }}</p>
+                <p><strong>Data de Início:</strong> {{ object.data_inicio }}</p>
+                <p><strong>Previsão de Fim:</strong> {{ object.dt_prev_fim }}</p>
+                <p><strong>Gerente:</strong> {{ object.gerente }}</p>
+
+                <h5 class="mt-4">Mestres:</h5>
+                <ul class="list-group mb-4">
+                    {% for mestre in object.mestres.all %}
+                        <li class="list-group-item">{{ mestre }}</li>
+                    {% empty %}
+                        <li class="list-group-item">Nenhum mestre cadastrado.</li>
+                    {% endfor %}
+                </ul>
+
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'obra-update' object.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'obra-delete' object.pk %}" class="btn btn-danger">Excluir</a>
+                    <a href="{% url 'obra-list' %}" class="btn btn-secondary">Voltar</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+</body>
+
+</html>
