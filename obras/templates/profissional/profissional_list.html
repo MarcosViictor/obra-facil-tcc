@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Profissionais</title>
+</head>
+<body>
+    <h1>Lista de Profissionais</h1>
+    <ul>
+        {% for profissional in profissionais %}
+            <li>
+                <a href="{% url 'profissional-detail' profissional.pk %}">
+                    {{ profissional.nome }} - {{ profissional.funcao }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'profissional-create' %}">Adicionar Novo Profissional</a>
+</body>
+</html>

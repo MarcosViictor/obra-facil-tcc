@@ -1,0 +1,15 @@
+<h1>{{ object.nome }}</h1>
+<p>{{ object.descricao }}</p>
+<p>Endereço: {{ object.endereco }}</p>
+<p>Data de Início: {{ object.data_inicio }}</p>
+<p>Previsão de Fim: {{ object.dt_prev_fim }}</p>
+<p>Gerente: {{ object.gerente }}</p>
+<p>Mestres:</p>
+<ul>
+    {% for mestre in object.mestres.all %}
+        <li>{{ mestre }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'obra-update' object.pk %}">Editar</a> |
+<a href="{% url 'obra-delete' object.pk %}">Excluir</a> |
+<a href="{% url 'obra-list' %}">Voltar</a>

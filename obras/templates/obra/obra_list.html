@@ -1,0 +1,11 @@
+<h1>Obras</h1>
+<a href="{% url 'obra-create' %}">Nova Obra</a>
+<ul>
+    {% for obra in object_list %}
+        <li>
+            <a href="{% url 'obra-detail' obra.pk %}">{{ obra.nome }}</a> 
+            (<a href="{% url 'obra-update' obra.pk %}">Editar</a> | 
+            <a href="{% url 'obra-delete' obra.pk %}">Excluir</a>)
+        </li>
+    {% endfor %}
+</ul>

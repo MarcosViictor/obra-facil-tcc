@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Profissional</title>
+</head>
+<body>
+    <h1>{{ profissional.nome }} - {{ profissional.funcao }}</h1>
+    <p>Obra: {{ profissional.obra.nome }}</p>
+    <a href="{% url 'profissional-update' profissional.pk %}">Editar</a> |
+    <a href="{% url 'profissional-delete' profissional.pk %}">Deletar</a> |
+    <a href="{% url 'profissional-list' %}">Voltar à lista</a>
+</body>
+</html>

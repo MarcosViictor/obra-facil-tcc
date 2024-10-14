@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Acompanhamentos</title>
+</head>
+<body>
+    <h1>Lista de Acompanhamentos</h1>
+    <ul>
+        {% for acompanhamento in acompanhamentos %}
+            <li>
+                <a href="{% url 'acompanhamento-detail' acompanhamento.pk %}">
+                    Acompanhamento da obra: {{ acompanhamento.obra.nome }} - Data: {{ acompanhamento.data }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'acompanhamento-create' %}">Adicionar Acompanhamento</a>
+</body>
+</html>

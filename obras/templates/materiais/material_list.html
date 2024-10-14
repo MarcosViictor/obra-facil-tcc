@@ -1,0 +1,21 @@
+<!-- templates/materiais/material_list.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Materiais</title>
+</head>
+<body>
+    <h1>Materiais</h1>
+    <a href="{% url 'material-create' %}">Adicionar Material</a>
+    <ul>
+        {% for material in materiais %}
+            <li>
+                <a href="{% url 'material-detail' material.pk %}">{{ material.nome }}</a> - 
+                {{ material.quantidade }} unidades
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

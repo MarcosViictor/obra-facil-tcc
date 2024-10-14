@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Acompanhamento</title>
+</head>
+<body>
+    <h1>Acompanhamento da obra: {{ object.obra.nome }}</h1>
+    <p>Data: {{ object.data }}</p>
+    <p>Descrição: {{ object.descricao }}</p>
+    <p>Mestre responsável: {{ object.mestre_responsavel.nome }}</p>
+
+    <a href="{% url 'acompanhamento-update' object.pk %}">Editar</a>
+    <form method="POST" action="{% url 'acompanhamento-delete' object.pk %}">
+        {% csrf_token %}
+        <button type="submit">Deletar</button>
+    </form>
+    <a href="{% url 'acompanhamento-list' %}">Voltar</a>
+</body>
+</html>

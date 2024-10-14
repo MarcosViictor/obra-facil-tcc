@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Acompanhamento</title>
+</head>
+<body>
+    <h1>Cadastrar Acompanhamento</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+
+    <a href="{% url 'acompanhamento-list' %}">Voltar</a>
+</body>
+</html>

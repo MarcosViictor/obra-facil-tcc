@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Obra</title>
+</head>
+<body>
+    <h1>Cadastrar Nova Obra</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            {{ form.nome.label }}<br>
+            {{ form.nome }}<br>
+            {{ form.nome.errors }}
+        </div>
+        <div>
+            {{ form.descricao.label }}<br>
+            {{ form.descricao }}<br>
+            {{ form.descricao.errors }}
+        </div>
+        <div>
+            {{ form.endereco.label }}<br>
+            {{ form.endereco }}<br>
+            {{ form.endereco.errors }}
+        </div>
+        <div>
+            {{ form.data_inicio.label }}<br>
+            <input type="date" name="data_inicio" required><br> <!-- Campo de data -->
+            {{ form.data_inicio.errors }}
+        </div>
+        <div>
+            {{ form.dt_prev_fim.label }}<br>
+            <input type="date" name="dt_prev_fim" required><br> <!-- Campo de data -->
+            {{ form.dt_prev_fim.errors }}
+        </div>
+        <div>
+            {{ form.gerente.label }}<br>
+            {{ form.gerente }}<br>
+            {{ form.gerente.errors }}
+        </div>
+        <div>
+            {{ form.mestres.label }}<br>
+            {{ form.mestres }}<br>
+            {{ form.mestres.errors }}
+        </div>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <a href="{% url 'obra-list' %}">Voltar para a lista de obras</a>
+</body>
+</html>
