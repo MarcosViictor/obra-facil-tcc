@@ -29,7 +29,7 @@ class Obra(models.Model):
             self.save()
 
     def get_absolute_url(self):
-        return reverse('obra-detail', args=[self.pk])  # Altere para a URL que deseja redirecionar
+        return reverse('obra-detail', args=[self.pk]) 
 
 class Profissional(models.Model):
     nome = models.CharField(max_length=100)
@@ -40,7 +40,7 @@ class Profissional(models.Model):
         return f"{self.nome} - {self.funcao}"
 
     def get_absolute_url(self):
-        return reverse('profissional-detail', args=[self.pk])  # Altere para a URL que deseja redirecionar
+        return reverse('profissional-detail', args=[self.pk])  
 
 class Acompanhamento(models.Model):
     obra = models.ForeignKey(Obra, on_delete=models.CASCADE, related_name='acompanhamentos')
