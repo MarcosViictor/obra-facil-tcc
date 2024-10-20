@@ -1,52 +1,68 @@
-    {% load static %}
-    <!DOCTYPE html>
-    <html lang="pt-br">
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% if object %}Editar{% else %}Criar{% endif %} Obra</title>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% if object %}Editar{% else %}Criar{% endif %} Obra</title>
 
-        <!-- Custom fonts for this template-->
-        <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-        <!-- Custom styles for this template-->
-        <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-    </head>
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+</head>
 
-    <body class="bg-gradient-primary">
-        <div class="container">
-            <!-- Outer Row -->
-            <div class="row justify-content-center">
-                <div class="col-xl-10 col-lg-12 col-md-9">
-                    <div class="card o-hidden border-0 shadow-lg my-5">
-                        <div class="card-body p-0">
-                            <!-- Nested Row within Card Body -->
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="p-5">
-                                        <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">{% if object %}Editar{% else %}Criar{% endif %} Obra</h1>
-                                        </div>
-
-                                        <!-- Exibindo o nome do usuário logado -->
-                                        {% if user.is_authenticated %}
-                                            <p>Usuário logado: {{ user.username }}</p>
-                                        {% else %}
-                                            <p>Nenhum usuário logado.</p>
-                                        {% endif %}
-
-                                        <!-- Formulário de Criação/Edição -->
-                                        <form method="post">
-                                            {% csrf_token %}
-                                            {{ form.as_p }}
-                                            <button type="submit" class="btn btn-primary btn-user btn-block">Salvar</button>
-                                        </form>
-
-                                        <a href="{% url 'obra-list' %}" class="btn btn-secondary btn-user btn-block">Cancelar</a>
+<body class="bg-gradient-primary">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">{% if object %}Editar{% else %}Criar{% endif %} Obra</h1>
                                     </div>
+
+                                    <!-- Exibindo o nome do usuário logado -->
+                                    {% if user.is_authenticated %}
+                                        <p>Usuário logado: {{ user.username }}</p>
+                                    {% else %}
+                                        <p>Nenhum usuário logado.</p>
+                                    {% endif %}
+
+                                    <!-- Mensagens de Erro -->
+                                    {% if form.errors %}
+                                        <div class="alert alert-danger">
+                                            <strong>Por favor, corrija os erros abaixo:</strong>
+                                            <ul>
+                                                {% for field in form %}
+                                                    {% for error in field.errors %}
+                                                        <li>{{ field.label }}: {{ error }}</li>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                                {% for error in form.non_field_errors %}
+                                                    <li>{{ error }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+
+                                    <!-- Formulário de Criação/Edição -->
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}  <!-- Se você quiser deixar como está, mantendo os campos em parágrafos -->
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Salvar</button>
+                                    </form>
+
+                                    <a href="{% url 'obra-list' %}" class="btn btn-secondary btn-user btn-block">Cancelar</a>
                                 </div>
                             </div>
                         </div>
@@ -66,4 +82,4 @@
         <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
     </body>
 
-    </html>
+</html>

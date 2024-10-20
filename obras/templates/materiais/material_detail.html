@@ -8,24 +8,69 @@
 </head>
 <body>
     <div class="container my-5">
-        <h1 class="h3">Detalhes de {{ material.nome }}</h1>
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <p><strong>Descrição:</strong> {{ material.descricao }}</p>
-                <p><strong>Quantidade:</strong> {{ material.quantidade }}</p>
-                <p><strong>Preço Unitário:</strong> R$ {{ material.preco_unitario }}</p>
-                <p><strong>Data de Compra:</strong> {{ material.data_compra }}</p>
-                <p><strong>Obra:</strong> {{ material.obra }}</p>
-                <p><strong>Fornecedor:</strong> {{ material.fornecedor }}</p>
-            </div>
-        </div>
+        <h1 class="h3 mb-4">Detalhes de {{ material.nome }}</h1>
+        
+        <!-- Tabela para exibir os detalhes do material -->
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Campo</th>
+                    <th>Detalhes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Descrição</strong></td>
+                    <td>{{ material.descricao }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Quantidade</strong></td>
+                    <td>{{ material.quantidade }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Quantidade Consumida</strong></td>
+                    <td>{{ material.quantidade_consumida }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Restante</strong></td>
+                    <td><span id="restante"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Preço Unitário</strong></td>
+                    <td>R$ {{ material.preco_unitario }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Data de Compra</strong></td>
+                    <td>{{ material.data_compra }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Obra</strong></td>
+                    <td>{{ material.obra }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Fornecedor</strong></td>
+                    <td>{{ material.fornecedor }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <div class="d-flex justify-content-between">
+        <!-- Botões de ação -->
+        <div class="d-flex justify-content-between mt-4">
             <a href="{% url 'material-update' material.id %}" class="btn btn-warning">Editar</a>
             <a href="{% url 'material-delete' material.id %}" class="btn btn-danger">Deletar</a>
             <a href="{% url 'material-list' %}" class="btn btn-secondary">Voltar para a lista</a>
         </div>
     </div>
+
+    <!-- JavaScript para fazer a subtração -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var quantidade = {{ material.quantidade }};
+            var quantidadeConsumida = {{ material.quantidade_consumida }};
+            var restante = quantidade - quantidadeConsumida;
+            document.getElementById('restante').textContent = restante;
+        });
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

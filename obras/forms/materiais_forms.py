@@ -4,13 +4,17 @@ from obras.models import Material
 class MaterialForm(forms.ModelForm):
     class Meta:
         model = Material
-        fields = ['nome', 'descricao', 'quantidade', 'preco_unitario', 'data_compra', 'obra', 'fornecedor']
+        fields = ['nome', 'descricao', 'quantidade', 'quantidade_consumida', 'preco_unitario', 'data_compra', 'fornecedor', 'obra']
         widgets = {
-            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome do Material'}),
-            'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descrição'}),
-            'quantidade': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Quantidade'}),
-            'preco_unitario': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Preço Unitário'}),
-            'data_compra': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Data da Compra', 'type': 'date'}),
-            'obra': forms.Select(attrs={'class': 'form-select'}),
-            'fornecedor': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Fornecedor'}),
+            'data_compra': forms.DateInput(attrs={'type': 'date'}),
         }
+
+    def clean_quantidade_consumida(self):
+        """Verifica se a quantidade consumida não é maior que a quantidade disponível."""
+        quantidade = self.cleaned_data.get('quantidade')
+        quantidade_consumida = self.cleaned_data.get('quantidade_consumida')
+
+        if quantidade_consumida > quantidade:
+            raise forms.ValidationError("A quantidade consumida não pode ser maior que a quantidade total.")
+
+        return quantidade_consumida
