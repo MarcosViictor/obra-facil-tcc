@@ -4,17 +4,19 @@ from obras.models import Material
 class MaterialForm(forms.ModelForm):
     class Meta:
         model = Material
-        fields = ['nome', 'descricao', 'quantidade', 'quantidade_consumida', 'preco_unitario', 'data_compra', 'fornecedor', 'obra']
+        fields = ['nome', 'descricao', 'quantidade', 'preco_unitario', 'data_compra', 'fornecedor', 'obra']
         widgets = {
-            'data_compra': forms.DateInput(attrs={'type': 'date'}),
+            'data_compra': forms.DateInput(attrs={'type': 'date', 'format': '%Y-%m-%d'}),  # Formato padrão de data
         }
 
-    def clean_quantidade_consumida(self):
-        """Verifica se a quantidade consumida não é maior que a quantidade disponível."""
+    def clean_quantidade(self):
         quantidade = self.cleaned_data.get('quantidade')
-        quantidade_consumida = self.cleaned_data.get('quantidade_consumida')
+        if quantidade <= 0:
+            raise forms.ValidationError("A quantidade deve ser maior que zero.")
+        return quantidade
 
-        if quantidade_consumida > quantidade:
-            raise forms.ValidationError("A quantidade consumida não pode ser maior que a quantidade total.")
-
-        return quantidade_consumida
+    def clean_preco_unitario(self):
+        preco_unitario = self.cleaned_data.get('preco_unitario')
+        if preco_unitario <= 0:
+            raise forms.ValidationError("O preço unitário deve ser maior que zero.")
+        return preco_unitario

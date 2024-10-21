@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Material</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="h3 mb-4 text-center">Detalhes de {{ material.nome }}</h1>
+
+        <!-- Tabela para exibir os detalhes do material -->
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Campo</th>
+                    <th scope="col">Detalhes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Descrição</strong></td>
+                    <td>{{ material.descricao }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Quantidade</strong></td>
+                    <td>{{ material.quantidade }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Restante</strong></td>
+                    <td><span id="restante">Calculando...</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Preço Unitário</strong></td>
+                    <td>R$ {{ material.preco_unitario }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Data de Compra</strong></td>
+                    <td>{{ material.data_compra }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Obra</strong></td>
+                    <td>{{ material.obra }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Fornecedor</strong></td>
+                    <td>{{ material.fornecedor }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Botões de ação -->
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="{% url 'material-update' material.id %}" class="btn btn-warning" aria-label="Editar Material">
+                Editar
+            </a>
+            <a href="{% url 'material-delete' material.id %}" class="btn btn-danger" aria-label="Deletar Material">
+                Deletar
+            </a>
+            <a href="{% url 'material-list' %}" class="btn btn-secondary" aria-label="Voltar para Lista de Materiais">
+                Voltar para a lista
+            </a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <script>
+        // Exemplo de script para preencher o campo "Restante"
+        document.addEventListener('DOMContentLoaded', function () {
+            const quantidade = parseInt('{{ material.quantidade }}', 10) || 0;
+            const consumido = 5; // Exemplo de valor consumido (substituir pelo real)
+            const restante = quantidade - consumido;
+
+            document.getElementById('restante').textContent = restante >= 0 ? restante : 'Dados inválidos';
+        });
+    </script>
+</body>
+</html>

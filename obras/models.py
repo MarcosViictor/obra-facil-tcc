@@ -31,7 +31,7 @@ class Obra(models.Model):
         self.save()
 
     def atualizar_valor_gasto(self):
-        total_gasto = sum(material.custo_total for material in self.materiais.all())
+        total_gasto = sum(material.custo_total for material in self.materiais.all()) + sum(consumo.custo_total for consumo in self.consumos.all())
         self.valor_gasto = total_gasto
         self.save()
 
@@ -82,7 +82,6 @@ class Material(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
     quantidade = models.IntegerField(help_text="Quantidade comprada")
-    quantidade_consumida = models.IntegerField(default=0, help_text="Quantidade consumida")
     preco_unitario = models.DecimalField(max_digits=10, decimal_places=2, help_text="Preço unitário do material")
     data_compra = models.DateField()
     obra = models.ForeignKey(Obra, on_delete=models.CASCADE, related_name='materiais')
@@ -93,18 +92,26 @@ class Material(models.Model):
 
     @property
     def custo_total(self):
-        """Calcula o custo total dos materiais comprados."""
         return self.quantidade * self.preco_unitario
 
+class ConsumoMaterial(models.Model):
+    material = models.ForeignKey(Material, on_delete=models.CASCADE, related_name='consumos')
+    quantidade_consumida = models.IntegerField(help_text="Quantidade consumida")
+    data_consumo = models.DateField(auto_now_add=True)
+    obra = models.ForeignKey(Obra, on_delete=models.CASCADE, related_name='consumos')
+
+    def __str__(self):
+        return f"Consumo de {self.quantidade_consumida} unidades de {self.material.nome} em {self.obra.nome}"
+
     @property
-    def quantidade_disponivel(self):
-        """Calcula a quantidade de material disponível, subtraindo o consumido."""
-        return self.quantidade - self.quantidade_consumida
+    def custo_total(self):
+        return self.quantidade_consumida * self.material.preco_unitario
 
     def save(self, *args, **kwargs):
-        """Atualiza o valor gasto na obra sempre que o material for salvo."""
+        if self.quantidade_consumida > self.material.quantidade:
+            raise ValueError(f"Não é possível consumir mais do que a quantidade disponível ({self.material.quantidade}).")
+        self.material.quantidade -= self.quantidade_consumida
+        self.material.save()
         super().save(*args, **kwargs)
         self.obra.atualizar_valor_gasto()
 
-    def get_absolute_url(self):
-        return reverse('material-detail', args=[self.pk])
