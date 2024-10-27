@@ -11,6 +11,6 @@ class ConsumoMaterialForm(forms.ModelForm):
         material = self.cleaned_data.get('material')
 
         # Verifica se a quantidade consumida excede a quantidade disponível
-        if quantidade_consumida > material.quantidade:
+        if quantidade_consumida and material and quantidade_consumida > material.quantidade:
             raise forms.ValidationError("A quantidade consumida excede a quantidade disponível.")
         return quantidade_consumida
