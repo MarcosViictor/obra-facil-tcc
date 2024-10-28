@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard da Obra - {{ obra.nome }}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <!-- Título da Obra -->
+        <div class="jumbotron text-center bg-primary text-white">
+            <h1 class="display-4">Dashboard da Obra: {{ obra.nome }}</h1>
+            <p class="lead">{{ obra.descricao }}</p>
+            <a href="{% url 'obra-detail' obra.id %}" class="btn btn-light">Ver Detalhes da Obra</a>
+        </div>
+
+        <!-- Informações da Obra -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">Informações da Obra</div>
+            <div class="card-body">
+                <p><strong>Endereço:</strong> {{ obra.endereco }}</p>
+                <p><strong>Data de Início:</strong> {{ obra.data_inicio }}</p>
+                <p><strong>Data Prevista de Término:</strong> {{ obra.dt_prev_fim }}</p>
+            </div>
+        </div>
+
+        <!-- Materiais -->
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">Materiais</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for material in materiais %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ material.nome }} - Quantidade: {{ material.quantidade }}
+                            <span class="badge badge-primary badge-pill">Custo: R$ {{ material.custo_total }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <p class="mt-3"><strong>Valor Total dos Materiais:</strong> R$ {{ total_valor_materiais }}</p>
+            </div>
+        </div>
+
+        <!-- Profissionais -->
+        <div class="card mb-4">
+            <div class="card-header bg-warning text-white">Profissionais</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for profissional in profissionais %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ profissional.nome }} - Função: {{ profissional.funcao }}
+                            <span class="badge badge-secondary badge-pill">Salário: R$ {{ profissional.salario }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <p class="mt-3"><strong>Total Salário dos Profissionais:</strong> R$ {{ total_salario_profissionais }}</p>
+            </div>
+        </div>
+
+        <!-- Acompanhamento e Progresso -->
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">Acompanhamento da Obra</div>
+            <div class="card-body">
+                <p><strong>Acompanhamentos:</strong></p>
+                <ul class="list-group">
+                    {% if acompanhamentos %}
+                        {% for acompanhamento in acompanhamentos %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ acompanhamento.descricao }} 
+                                <span class="badge badge-success badge-pill">{{ acompanhamento.progresso }}%</span>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">Nenhum acompanhamento registrado.</li>
+                    {% endif %}
+                </ul>
+                <p class="mt-3"><strong>Progresso Total da Obra:</strong> {{ progresso_total }}%</p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ progresso_total }}%;" aria-valuenow="{{ progresso_total }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ progresso_total }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumo Financeiro -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">Resumo Financeiro</div>
+            <div class="card-body">
+                <p><strong>Valor Total da Obra:</strong> R$ {{ valor_total_obra }}</p>
+                <p><strong>Custos Totais (Materiais + Salários):</strong> R$ {{ total_custos }}</p>
+                <p><strong>Saldo Final:</strong> R$ {{ saldo_final }}</p>
+                <a href="{% url 'obra-list' %}" class="btn btn-secondary">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS e dependências -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ from obras.models import Material
 class MaterialForm(forms.ModelForm):
     class Meta:
         model = Material
-        fields = ['nome', 'descricao', 'quantidade', 'preco_unitario', 'data_compra', 'fornecedor', 'obra']
+        fields = ['nome', 'descricao', 'quantidade', 'preco_total', 'data_compra', 'fornecedor', 'obra']
         widgets = {
             'data_compra': forms.DateInput(attrs={'type': 'date', 'format': '%Y-%m-%d'}),  # Formato padrão de data
         }
@@ -15,8 +15,8 @@ class MaterialForm(forms.ModelForm):
             raise forms.ValidationError("A quantidade deve ser maior que zero.")
         return quantidade
 
-    def clean_preco_unitario(self):
-        preco_unitario = self.cleaned_data.get('preco_unitario')
-        if preco_unitario <= 0:
-            raise forms.ValidationError("O preço unitário deve ser maior que zero.")
-        return preco_unitario
+    def clean_preco_total(self):
+        preco_total = self.cleaned_data.get('preco_total')
+        if preco_total <= 0:
+            raise forms.ValidationError("O preço total deve ser maior que zero.")
+        return preco_total

@@ -57,6 +57,7 @@ class Acompanhamento(models.Model):
         return f"Acompanhamento em {self.obra.nome} - {self.data} - {self.progresso}%"
 
     def save(self, *args, **kwargs):
+        # Verifica se o novo progresso total não excederá 100%
         total_progresso_existente = sum(acomp.progresso for acomp in self.obra.acompanhamentos.all())
         if total_progresso_existente + self.progresso > 100:
             raise ValueError("O progresso total da obra não pode exceder 100%.")
@@ -82,7 +83,7 @@ class Material(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
     quantidade = models.IntegerField(help_text="Quantidade comprada")
-    preco_unitario = models.DecimalField(max_digits=10, decimal_places=2, help_text="Preço unitário do material")
+    preco_total = models.DecimalField(max_digits=10, decimal_places=2, help_text="Preço total do material")
     data_compra = models.DateField()
     obra = models.ForeignKey(Obra, on_delete=models.CASCADE, related_name='materiais')
     fornecedor = models.CharField(max_length=100)
@@ -92,7 +93,8 @@ class Material(models.Model):
 
     @property
     def custo_total(self):
-        return self.quantidade * self.preco_unitario
+        return self.preco_total  # Agora retornamos apenas o preço total
+
 
 class ConsumoMaterial(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE, related_name='consumos')
@@ -105,7 +107,8 @@ class ConsumoMaterial(models.Model):
 
     @property
     def custo_total(self):
-        return self.quantidade_consumida * self.material.preco_unitario
+        preco_unitario = self.material.preco_total / self.material.quantidade
+        return preco_unitario * self.quantidade_consumida
 
     def save(self, *args, **kwargs):
         if self.quantidade_consumida > self.material.quantidade:
@@ -114,4 +117,3 @@ class ConsumoMaterial(models.Model):
         self.material.save()
         super().save(*args, **kwargs)
         self.obra.atualizar_valor_gasto()
-

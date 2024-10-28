@@ -2,6 +2,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from obras.views.consumoMaterial import ConsumoMaterialCreateView
+from obras.views.dashboard import dashboard_obra
 from usuarios.views import views
 #Obras
 from .views.obras import (ObraListView, ObraDetailView, ObraCreateView, 
@@ -55,6 +56,7 @@ urlpatterns = [
     path('acompanhamentos/<int:pk>/update/', AcompanhamentoUpdateView.as_view(), name='acompanhamento-update'),
     path('acompanhamentos/<int:pk>/delete/', AcompanhamentoDeleteView.as_view(), name='acompanhamento-delete'),
     #dashboard
+    path('dashboard/obra/<int:obra_id>/', dashboard_obra, name='dashboard-obra'),
     #materiais
     path('materiais/', MaterialListView.as_view(), name='material-list'),
     path('materiais/<int:pk>/', MaterialDetailView.as_view(), name='material-detail'),
