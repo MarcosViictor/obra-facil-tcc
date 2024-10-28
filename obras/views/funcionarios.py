@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from obras.models import Profissional
-from obras.forms.profissional_forms import ProfissionalForm  # Adicione esta linha
+from obras.forms.profissional_forms import ProfissionalForm  
 
 class ProfissionalListView(ListView):
     model = Profissional

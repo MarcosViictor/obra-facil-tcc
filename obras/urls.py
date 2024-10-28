@@ -1,5 +1,8 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
+
+from obras.views.consumomaterial import ConsumoMaterialCreateView
+from usuarios.views import views
 #Obras
 from .views.obras import (ObraListView, ObraDetailView, ObraCreateView, 
     ObraUpdateView, ObraDeleteView
@@ -15,7 +18,6 @@ from .views.acompanhamento import(
     AcompanhamentoDeleteView
 )
 # Dashboard
-from .views.dashboard import DashboardView
 
 #Materiai
 from .views.materiais import(
@@ -53,12 +55,12 @@ urlpatterns = [
     path('acompanhamentos/<int:pk>/update/', AcompanhamentoUpdateView.as_view(), name='acompanhamento-update'),
     path('acompanhamentos/<int:pk>/delete/', AcompanhamentoDeleteView.as_view(), name='acompanhamento-delete'),
     #dashboard
-    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     #materiais
     path('materiais/', MaterialListView.as_view(), name='material-list'),
     path('materiais/<int:pk>/', MaterialDetailView.as_view(), name='material-detail'),
     path('materiais/create/', MaterialCreateView.as_view(), name='material-create'),
     path('materiais/<int:pk>/update/', MaterialUpdateView.as_view(), name='material-update'),
     path('materiais/<int:pk>/delete/', MaterialDeleteView.as_view(), name='material-delete'),
+    path('consumos/novo/', ConsumoMaterialCreateView.as_view(), name='consumo-create')
 
 ]
