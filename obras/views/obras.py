@@ -1,7 +1,7 @@
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from obras.models import Obra
-from django.urls import reverse_lazy
+from obras.forms.obras_forms import ObraForm
 
 class ObraListView(ListView):
     model = Obra
@@ -13,16 +13,19 @@ class ObraDetailView(DetailView):
 
 class ObraCreateView(CreateView):
     model = Obra
-    fields = ['nome', 'descricao', 'endereco', 'data_inicio', 'dt_prev_fim', 'gerente', 'mestres']
+    form_class = ObraForm  # Usando o form criado
     template_name = 'obra/obra_form.html'
     
     def get_success_url(self):
-        return reverse('obra-list')  # O 'obra-list' é o nome da URL
+        return reverse_lazy('obra-list')  # URL após criar a obra
 
 class ObraUpdateView(UpdateView):
     model = Obra
-    fields = ['nome', 'descricao', 'endereco', 'data_inicio', 'dt_prev_fim', 'gerente', 'mestres']
+    form_class = ObraForm  # Usando o form para update
     template_name = 'obra/obra_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('obra-detail', kwargs={'pk': self.object.pk})  # Redirecionando para o detalhe da obra
 
 class ObraDeleteView(DeleteView):
     model = Obra

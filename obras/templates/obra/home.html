@@ -57,7 +57,7 @@
         <h4 class="text-center">Menu</h4>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                {% comment %} <a class="nav-link" href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a> {% endcomment %}
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'obra-list' %}"><i class="fas fa-building"></i> Obras</a>
@@ -72,8 +72,13 @@
                 <a class="nav-link" href="{% url 'acompanhamento-list' %}"><i class="fas fa-clipboard-list"></i> Acompanhamentos</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'consumo-create' %}"><i class="fas fa-plus-circle"></i> Consumo de Material</a>
+            </li>
+            
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'obra-create' %}"><i class="fas fa-plus-circle"></i> Nova Obra</a>
             </li>
+            
             
            <li class="nav-item">
             <a href="{% url 'logout' %}">Logout</a>

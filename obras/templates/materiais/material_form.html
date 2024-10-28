@@ -1,26 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>{% if object %}Editar{% else %}Adicionar{% endif %} Material</title>
 </head>
+
 <body>
     <div class="container my-5">
-        <h1 class="h3 text-center">{% if object %}Editar{% else %}Adicionar{% endif %} Material</h1>
+        <h1 class="h3 text-center mb-4">{% if object %}Editar{% else %}Adicionar{% endif %} Material</h1>
 
-        <form method="post">
+        <!-- Mensagens de Sucesso e Erro -->
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Por favor, corrija os erros abaixo:</strong>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="post" novalidate>
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">{% if object %}Atualizar{% else %}Adicionar{% endif %}</button>
+            {{ form.as_p }}  <!-- Renderiza o formulário usando o método padrão -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">
+                    {% if object %}Atualizar{% else %}Adicionar{% endif %}
+                </button>
+            </div>
         </form>
 
-        <a href="{% url 'material-list' %}" class="btn btn-secondary mt-3">Voltar para a lista</a>
+        <div class="text-center mt-3">
+            <a href="{% url 'material-list' %}" class="btn btn-secondary">Voltar para a lista</a>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
+
 </html>
